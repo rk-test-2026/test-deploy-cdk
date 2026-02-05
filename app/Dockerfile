@@ -7,7 +7,7 @@ WORKDIR /app
 # Copy package files and install dependencies
 # Doing this before copying the full source code leverages Docker's layer caching
 COPY package*.json ./
-RUN npm install
+RUN npm install --production
 
 # Copy the rest of the application code
 COPY . .
