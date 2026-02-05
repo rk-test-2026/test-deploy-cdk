@@ -1,6 +1,9 @@
 {
   "name": "infra",
   "private": true,
+  "engines": {
+    "node": "18.x"
+  },
   "scripts": {
     "build": "tsc",
     "deploy": "cdktf deploy"
