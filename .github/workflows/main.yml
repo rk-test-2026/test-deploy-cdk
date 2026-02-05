@@ -48,6 +48,11 @@ jobs:
           cd ./app
           docker build -t $REGISTRY/tv-assessment-app:$IMAGE_TAG .
           docker push $REGISTRY/tv-assessment-app:$IMAGE_TAG
+      - name: Deploy Infra
+        run: |
+          npm install
+          npm install -g cdktf-cli
+          cdktf deploy --auto-approve
 
 
 
