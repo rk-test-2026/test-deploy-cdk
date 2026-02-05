@@ -14,3 +14,26 @@ COPY . .
 
 # Build the application (only needed if using TypeScript, React, etc.)
 # RUN npm run build
+
+# Stage 2: Production stage
+FROM node:20-alpine
+
+# Set environment to production
+ENV NODE_ENV=production
+
+WORKDIR /app
+
+# Only copy the production dependencies and built files from the builder stage
+COPY --from=builder /app/package*.json ./
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/dist ./dist
+# Note: Use './' if you don't have a build step (dist folder)
+
+# Run the app as a non-root user for security
+USER node
+
+# Expose the port your app runs on
+EXPOSE 3000
+
+# Start the application
+CMD ["node", "dist/index.js"]
