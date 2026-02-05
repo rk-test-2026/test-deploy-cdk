@@ -54,8 +54,6 @@ jobs:
         run: |
           cd ./app
           docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-          docker tag app:latest \
-            ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/tv-assessment-app:$IMAGE_TAG
           docker push \
             ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/tv-assessment-app:$IMAGE_TAG
 
