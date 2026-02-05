@@ -6,4 +6,8 @@ router.get('/', (_req, res) => {
   res.send('Hello from Express + TypeScript!');
 });
 
+router.get('/health', (_req, res) => {
+  res.send('App is Healthy');
+});
+
 export default router;
