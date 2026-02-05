@@ -50,6 +50,7 @@ jobs:
           docker push $REGISTRY/tv-assessment-app:$IMAGE_TAG
       - name: Deploy Infra
         run: |
+          cd ./iac
           npm install
           npm install -g cdktf-cli
           cdktf deploy --auto-approve
