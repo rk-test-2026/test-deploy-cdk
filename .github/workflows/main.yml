@@ -7,8 +7,11 @@ env:
 
 
 jobs:
-  build:
+  build-and-publish:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4 # Uses a reusable action to get the code
