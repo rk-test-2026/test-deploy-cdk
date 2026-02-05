@@ -33,15 +33,6 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
-      - uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: 1.6.6
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: npm
-
       - name: Login to ECR
         run: |
           aws ecr get-login-password | docker login \
@@ -56,9 +47,20 @@ jobs:
           cd ./app
           docker build -t $REGISTRY/tv-assessment-app:$IMAGE_TAG .
           docker push $REGISTRY/tv-assessment-app:$IMAGE_TAG
+      - name: Set up terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.6.6
+
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
       - name: Deploy Infra
         working-directory: iac
         run: |
+          npm install
           npm install -g cdktf-cli
           cdktf deploy --auto-approve
 
