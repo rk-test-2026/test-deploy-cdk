@@ -1,39 +1,21 @@
-# Stage 1: Build stage
+#Build
 FROM node:20-alpine AS builder
-
-# Set the working directory
 WORKDIR /app
-
-# Copy package files and install dependencies
-# Doing this before copying the full source code leverages Docker's layer caching
 COPY package*.json ./
-RUN npm install --production
-
-# Copy the rest of the application code
+RUN npm install
 COPY . .
+RUN npm run build
 
-# Build the application (only needed if using TypeScript, React, etc.)
-# RUN npm run build
-
-# Stage 2: Production stage
+#Prod
 FROM node:20-alpine
-
-# Set environment to production
+WORKDIR /app
 ENV NODE_ENV=production
 
-WORKDIR /app
-
-# Only copy the production dependencies and built files from the builder stage
-COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app ./
-# Note: Use './' if you don't have a build step (dist folder)
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/package*.json ./
 
-# Run the app as a non-root user for security
 USER node
-
-# Expose the port your app runs on
 EXPOSE 3000
 
-# Start the application
-CMD ["node", "index.js"]
+CMD ["node", "dist/server.js"]
