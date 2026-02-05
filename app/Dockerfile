@@ -26,7 +26,7 @@ WORKDIR /app
 # Only copy the production dependencies and built files from the builder stage
 COPY --from=builder /app/package*.json ./
 COPY --from=builder /app/node_modules ./node_modules
-COPY --from=builder /app/dist ./dist
+COPY --from=builder /app ./
 # Note: Use './' if you don't have a build step (dist folder)
 
 # Run the app as a non-root user for security
