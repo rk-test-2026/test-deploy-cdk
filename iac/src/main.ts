@@ -1,5 +1,5 @@
 import { App, TerraformStack } from "cdktf";
-import { AwsProvider } from "@cdktf/provider-aws";
+import { AwsProvider } from "@cdktf/provider-aws/lib/provider";
 import { loadConfig } from "./config";
 import { NetworkStack } from "./network";
 import { IamStack } from "./iam";

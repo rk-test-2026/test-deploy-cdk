@@ -1,11 +1,9 @@
 // src/ecs.ts
 import { Construct } from "constructs";
-import {
-  EcrRepository,
-  EcsCluster,
-  EcsTaskDefinition,
-  EcsService
-} from "@cdktf/provider-aws";
+import { EcrRepository } from "@cdktf/provider-aws/lib/ecr-repository";
+import { EcsCluster } from "@cdktf/provider-aws/lib/ecs-cluster";
+import { EcsService } from "@cdktf/provider-aws/lib/ecs-service";
+import { EcsTaskDefinition } from "@cdktf/provider-aws/lib/ecs-task-definition";
 
 export class EcsStack {
   constructor(
