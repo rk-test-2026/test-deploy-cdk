@@ -49,11 +49,13 @@ jobs:
           docker push $REGISTRY/tv-assessment-app:$IMAGE_TAG
       - name: Set up terraform
         uses: hashicorp/setup-terraform@v3
+        working-directory: iac
         with:
           terraform_version: 1.6.6
 
       - name: setup node
         uses: actions/setup-node@v4
+        working-directory: iac
         with:
           node-version: 18
           cache: npm
