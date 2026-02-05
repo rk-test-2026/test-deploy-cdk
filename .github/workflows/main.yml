@@ -6,7 +6,8 @@ on:
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: ${{ github.repository }}
-
+  ENV: dev
+  AWS_REGION: us-east-1
 
 jobs:
   build-and-publish:
@@ -32,8 +33,6 @@ jobs:
             type=ref,event=branch
             type=sha,format=short
             latest
-      - name: List files in the repository
-        run: ls -F
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -41,17 +40,5 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install Dependencies
-        run: |
-          npm install
-          npm install -g cdktf-cli
-      - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_wrapper: false
 
 
