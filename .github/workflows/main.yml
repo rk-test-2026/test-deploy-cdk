@@ -52,12 +52,15 @@ jobs:
         with:
           terraform_version: 1.6.6
 
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
       - name: Deploy Infra
         working-directory: iac
         run: |
           npm install
           npm install -g cdktf-cli
-          npm install @cdktf/provider-aws
           cdktf deploy --auto-approve
 
 
