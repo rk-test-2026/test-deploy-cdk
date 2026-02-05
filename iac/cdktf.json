@@ -1,0 +1,8 @@
+{
+  "language": "typescript",
+  "app": "npx ts-node src/main.ts",
+  "terraformProviders": ["hashicorp/aws@~> 5.0"],
+  "context": {
+    "project": "tv-assessment-app"
+  }
+}

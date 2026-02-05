@@ -1,0 +1,7 @@
+{
+  "env": "dev",
+  "cpu": 256,
+  "memory": 512,
+  "desiredCount": 1,
+  "containerPort": 3000
+}
