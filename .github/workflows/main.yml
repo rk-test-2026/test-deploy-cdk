@@ -49,8 +49,7 @@ jobs:
       - name: Build and push Docker image
         env:
           REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
-          REPOSITORY: ${{ vars.ECR_REPOSITORY }}
-          IMAGE_TAG: ${{ github.sha }}
+          IMAGE_TAG: ${{ github.sha::0:7 }}
         run: |
           cd ./app
           docker build -t $REGISTRY/tv-assessment-app:$IMAGE_TAG .
