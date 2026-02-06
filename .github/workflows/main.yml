@@ -39,14 +39,6 @@ jobs:
             --username AWS \
             --password-stdin \
             ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${AWS_REGION}.amazonaws.com
-      - name: Build and push Docker image
-        env:
-          REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
-          IMAGE_TAG: ${{ github.sha }}
-        run: |
-          cd ./app
-          docker build -t $REGISTRY/tv-assessment-app:$IMAGE_TAG .
-          docker push $REGISTRY/tv-assessment-app:$IMAGE_TAG
       - name: Set up terraform
         uses: hashicorp/setup-terraform@v3
         with:
@@ -57,6 +49,14 @@ jobs:
           npm install
           npm install -g cdktf-cli
           cdktf deploy --auto-approve
+      - name: Build and push Docker image
+        env:
+          REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          cd ./app
+          docker build -t $REGISTRY/tv-assessment-app:$IMAGE_TAG .
+          docker push $REGISTRY/tv-assessment-app:$IMAGE_TAG
 
 
 

@@ -1,0 +1,15 @@
+name: Manual Deploy
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Destroy Infra
+        working-directory: iac
+        run: |
+          npm install
+          npm install -g cdktf-cli
+          cdktf destroy
