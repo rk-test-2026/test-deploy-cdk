@@ -18,7 +18,7 @@ jobs:
       id-token: write
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v4 # Uses a reusable action to get the code
+        uses: actions/checkout@v4
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@v5
