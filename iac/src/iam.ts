@@ -1,6 +1,7 @@
 // src/iam.ts
 import { Construct } from "constructs";
-import { IamRole, IamRolePolicyAttachment } from "@cdktf/provider-aws/lib/iam-role";
+import { IamRole } from "@cdktf/provider-aws/lib/iam-role";
+import { IamRolePolicyAttachment } from "@cdktf/provider-aws/lib/iam";
 
 export class IamStack {
   executionRole: IamRole;
