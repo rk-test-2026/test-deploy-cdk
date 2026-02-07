@@ -55,6 +55,7 @@ jobs:
           npm install
           npm install -g cdktf-cli
           cdktf deploy --auto-approve
+          cdktf deploy tv-assessment-app-dev --refresh-only
 
 
   push:
