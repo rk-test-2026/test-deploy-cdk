@@ -23,8 +23,10 @@ export class EcsStack {
       name: `${cfg.env}-cluster`
     });
 
+    new TimeProvider(scope, "time_provider");
+
     const taskDefinition = new EcsTaskDefinition(scope, "task", {
-      family: `${cfg.env}-task`,
+      family: `${cfg.project}-${cfg.env}-task`,
       cpu: `${cfg.cpu}`,
       memory: `${cfg.memory}`,
       networkMode: "bridge",
@@ -34,7 +36,7 @@ export class EcsStack {
       taskRoleArn: iam.taskRole.arn,
       containerDefinitions: JSON.stringify([
         {
-          name: "app",
+          name: `${cfg.project}-${cfg.env}`,
           image: `${accountId}.dkr.ecr.${cfg.region}.amazonaws.com/${cfg.project}-${cfg.env}:latest`,
           portMappings: [
             {
@@ -46,7 +48,6 @@ export class EcsStack {
       ])
     });
 
-    new TimeProvider(scope, "time_provider");
 
     const waitStep = new Sleep(scope, "wait_for_task", {
         createDuration: "30s",
@@ -54,7 +55,7 @@ export class EcsStack {
     });
 
     new EcsService(scope, "service", {
-      name: `${cfg.env}-service`,
+      name: `${cfg.project}-${cfg.env}-service`,
       cluster: cluster.id,
       taskDefinition: taskDefinition.arn,
       dependsOn: [waitStep],
