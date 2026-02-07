@@ -4,8 +4,8 @@ import { EcrRepository } from "../.gen/providers/aws/ecr-repository";
 import { EcsCluster } from "../.gen/providers/aws/ecs-cluster";
 import { EcsService } from "../.gen/providers/aws/ecs-service";
 import { EcsTaskDefinition } from "../.gen/providers/aws/ecs-task-definition";
-// import { TimeProvider } from "../.gen/providers/time/provider";
-// import { Sleep } from "../.gen/providers/time/sleep";
+import { CodedeployApp } from "../.gen/providers/aws/codedeploy-app";
+import { CodedeployDeploymentGroup } from "../.gen/providers/aws/codedeploy-deployment-group";
 
 export class EcsStack {
   constructor(
@@ -45,12 +45,8 @@ export class EcsStack {
     });
 
 
-//     const waitStep = new Sleep(scope, "wait_for_task", {
-//         createDuration: "30s",
-//         dependsOn: [taskDef]
-//     });
 
-    new EcsService(scope, "service", {
+    const ecsService = new EcsService(scope, "service", {
       name: `${cfg.project}-${cfg.env}-service`,
       cluster: cluster.id,
       taskDefinition: taskDef.arn,
@@ -62,6 +58,45 @@ export class EcsStack {
               securityGroups: [network.sg.id],
               assignPublicIp: true
             }
+        deploymentController: {
+            type: "CODE_DEPLOY"
+          }
     });
+
+    const app = new CodedeployApp(scope, "codedeploy_app", {
+      computePlatform: "ECS",
+      name: `${cfg.project}-${cfg.env}-deploy`
+    });
+
+    // Create the Deployment Group
+    new CodedeployDeploymentGroup(scope, "deploy_group", {
+      appName: app.name,
+      deploymentGroupName: "DgpBlueGreen",
+      serviceRoleArn: iam.codeDeployRole.arn, // Requires a new IAM role
+      deploymentConfigName: "CodeDeployDefault.ECSAllAtOnce",
+      ecsService: {
+        clusterName: cluster.name,
+        serviceName: ecsService.name
+      },
+      blueGreenDeploymentConfiguration: {
+        deploymentReadyOption: {
+          actionOnTimeout: "CONTINUE_DEPLOYMENT"
+        },
+        terminateBlueInstancesOnDeploymentSuccess: {
+          terminationWaitTimeInMinutes: 5
+        }
+      },
+      loadBalancerInfo: {
+        targetGroupPairInfo: {
+          prodTrafficRoute: { listenerArns: [network.listener.arn] },
+          targetGroup: [
+            { name: network.blueTargetGroup.name },
+            { name: network.greenTargetGroup.name }
+          ]
+        }
+      }
+    });
+
+
   }
 }
