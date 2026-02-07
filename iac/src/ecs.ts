@@ -25,7 +25,7 @@ export class EcsStack {
 
     new TimeProvider(scope, "time_provider");
 
-    const taskDefinition = new EcsTaskDefinition(scope, "task", {
+    const taskDef = new EcsTaskDefinition(scope, "task", {
       family: `${cfg.project}-${cfg.env}-task`,
       cpu: `${cfg.cpu}`,
       memory: `${cfg.memory}`,
@@ -51,13 +51,13 @@ export class EcsStack {
 
     const waitStep = new Sleep(scope, "wait_for_task", {
         createDuration: "30s",
-        dependsOn: [taskDefinition]
+        dependsOn: [taskDef]
     });
 
     new EcsService(scope, "service", {
       name: `${cfg.project}-${cfg.env}-service`,
       cluster: cluster.id,
-      taskDefinition: taskDefinition.arn,
+      taskDefinition: taskDef.arn,
       dependsOn: [waitStep],
       desiredCount: cfg.desiredCount,
       launchType: "EC2",
