@@ -9,6 +9,22 @@ env:
   AWS_REGION: us-east-1
 
 jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Build and push Docker image
+        env:
+          REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          cd ./app
+          docker build -t $REGISTRY/tv-assessment-app-${{ env.ENV }}:$IMAGE_TAG .
+          docker push $REGISTRY/tv-assessment-app-${{ env.ENV }}:$IMAGE_TAG
+
   deploy:
     runs-on: ubuntu-latest
     permissions:
@@ -33,6 +49,31 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
+      - name: Deploy Infra
+        working-directory: iac
+        run: |
+          npm install
+          npm install -g cdktf-cli
+          cdktf deploy --auto-approve
+
+
+  push:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: AWS assume role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          aws-region: ${{ env.AWS_REGION }}
+      - name: Login to ECR
+        run: |
+          aws ecr get-login-password | docker login \
+            --username AWS \
+            --password-stdin \
+            ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${AWS_REGION}.amazonaws.com
       - name: Build and push Docker image
         env:
           REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
@@ -41,12 +82,3 @@ jobs:
           cd ./app
           docker build -t $REGISTRY/tv-assessment-app-${{ env.ENV }}:$IMAGE_TAG .
           docker push $REGISTRY/tv-assessment-app-${{ env.ENV }}:$IMAGE_TAG
-      - name: Deploy Infra
-        working-directory: iac
-        run: |
-          npm install
-          npm install -g cdktf-cli
-          cdktf destroy --auto-approve
-
-
-
