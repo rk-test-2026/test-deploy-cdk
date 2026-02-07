@@ -44,7 +44,7 @@ export class EcsStack {
       ])
     });
 
-    new TimeProvider(this, "time_provider");
+    new TimeProvider(scope, "time_provider");
 
     const wait = new Sleep(scope, "wait_for_task", {
         createDuration: "30s",
