@@ -22,6 +22,12 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
+      - name: Login to ECR
+        run: |
+          aws ecr get-login-password | docker login \
+            --username AWS \
+            --password-stdin \
+            ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${AWS_REGION}.amazonaws.com
       - name: Set up terraform
         uses: hashicorp/setup-terraform@v3
         with:
