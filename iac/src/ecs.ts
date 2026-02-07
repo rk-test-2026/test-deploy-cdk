@@ -43,10 +43,10 @@ export class EcsStack {
       ])
     });
 
-const wait = new Sleep(this, "wait_for_task", {
-  createDuration: "30s",
-  dependsOn: [taskDefinition]
-});
+    const wait = new Sleep(scope, "wait_for_task", {
+        createDuration: "30s",
+        dependsOn: [taskDefinition]
+    });
 
     const ecsService = new EcsService(scope, "service", {
       name: `${cfg.env}-service`,
