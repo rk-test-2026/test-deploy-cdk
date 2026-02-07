@@ -27,6 +27,7 @@ export class EcsStack {
       cpu: `${cfg.cpu}`,
       memory: `${cfg.memory}`,
       networkMode: "awsvpc",
+      trackLatest: true
       requiresCompatibilities: ["FARGATE"],
       executionRoleArn: iam.executionRole.arn,
       taskRoleArn: iam.taskRole.arn,
