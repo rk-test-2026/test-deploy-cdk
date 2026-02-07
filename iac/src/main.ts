@@ -1,11 +1,11 @@
 import { App, TerraformStack } from "cdktf";
-import { AwsProvider } from "./.gen/providers/aws/provider";
+import { AwsProvider } from "../.gen/providers/aws/provider";
 import { loadConfig } from "./config";
 import { NetworkStack } from "./network";
 import { IamStack } from "./iam";
 import { EcsStack } from "./ecs";
 import { S3Backend} from "cdktf/lib/backends"
-import { DataAwsCallerIdentity } from "./.gen/providers/aws/data-aws-caller-identity"
+import { DataAwsCallerIdentity } from "../.gen/providers/aws/data-aws-caller-identity"
 
 const app = new App();
 const cfg = loadConfig();

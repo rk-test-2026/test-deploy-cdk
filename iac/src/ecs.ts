@@ -1,10 +1,10 @@
 // src/ecs.ts
 import { Construct } from "constructs";
-import { EcrRepository } from "./.gen/providers/aws/ecr-repository";
-import { EcsCluster } from "./.gen/providers/aws/ecs-cluster";
-import { EcsService } from "./.gen/providers/aws/ecs-service";
-import { EcsTaskDefinition } from "./.gen/providers/aws/ecs-task-definition";
-import { Sleep } from "./.gen/providers/time/sleep";
+import { EcrRepository } from "../.gen/providers/aws/ecr-repository";
+import { EcsCluster } from "../.gen/providers/aws/ecs-cluster";
+import { EcsService } from "../.gen/providers/aws/ecs-service";
+import { EcsTaskDefinition } from "../.gen/providers/aws/ecs-task-definition";
+import { Sleep } from "../.gen/providers/time/sleep";
 
 export class EcsStack {
   constructor(
