@@ -55,7 +55,7 @@ jobs:
           npm install
           npm install -g cdktf-cli@0.21.0
           npx cdktf-cli get
-          cdktf destroy
+          cdktf destroy --auto-approve
       - name: Deploy Infra
         working-directory: iac
         run: |
