@@ -4,8 +4,6 @@ on:
     branches: [main]
 
 env:
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
   ENV: dev
   AWS_REGION: us-east-1
 
@@ -19,26 +17,11 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
-      - name: Extract metadata (tags, labels) for Docker
-        id: meta
-        uses: docker/metadata-action@v5
-        with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-          tags: |
-            type=ref,event=branch
-            type=sha,format=short
-            latest
       - name: AWS assume role
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: ${{ env.AWS_REGION }}
-      - name: Login to ECR
-        run: |
-          aws ecr get-login-password | docker login \
-            --username AWS \
-            --password-stdin \
-            ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${AWS_REGION}.amazonaws.com
       - name: Set up terraform
         uses: hashicorp/setup-terraform@v3
         with:

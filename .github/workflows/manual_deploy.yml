@@ -3,6 +3,10 @@ name: Manual Deploy
 on:
   workflow_dispatch:
 
+env:
+  ENV: dev
+  AWS_REGION: us-east-1
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
