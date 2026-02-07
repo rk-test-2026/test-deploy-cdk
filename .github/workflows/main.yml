@@ -54,7 +54,8 @@ jobs:
         run: |
           npm install
           npm install -g cdktf-cli
-          cdktf deploy --auto-approve
+          cdktf state rm --stack tv-assessment-app-dev aws_ecs_task_definition.task
+#          cdktf deploy --auto-approve
 
 
   push:
