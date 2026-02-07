@@ -53,7 +53,7 @@ jobs:
         working-directory: iac
         run: |
           npm install
-          npm install -g cdktf-cli
+          npm install -g cdktf-cli@0.21.0
           npx cdktf-cli get
           cdktf deploy --auto-approve
 
