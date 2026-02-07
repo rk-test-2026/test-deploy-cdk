@@ -54,6 +54,7 @@ jobs:
         run: |
           npm install
           npm install -g cdktf-cli
+          npx cdktf-cli get
           cdktf deploy --auto-approve
 
 
