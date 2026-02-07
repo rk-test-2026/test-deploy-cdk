@@ -13,9 +13,9 @@ export class EcsStack {
     iam: any,
     accountId: any
   ) {
-//     const repo = new EcrRepository(scope, "repo", {
-//       name: `${cfg.project}-${cfg.env}`
-//     });
+    const repo = new EcrRepository(scope, "repo", {
+      name: `${cfg.project}-${cfg.env}`
+    });
 
 
     const cluster = new EcsCluster(scope, "cluster", {
