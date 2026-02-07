@@ -51,8 +51,8 @@ export class EcsStack {
         subnets: network.subnets.map((s: any) => s.id),
         securityGroups: [network.sg.id],
         assignPublicIp: true
-      }
-        dependsOn: [taskDefinition]
+      },
+      dependsOn: [taskDefinition]
     });
   }
 }
