@@ -55,7 +55,6 @@ jobs:
         with:
           terraform_version: 1.6.6
       - name: Clean State if Requested
-        if: github.event.inputs.force_clean_state == 'false'
         run: npx cdktf-cli state rm --stack tv-assessment-app-dev aws_ecs_task_definition.task
       - name: Deploy Infra
         working-directory: iac
