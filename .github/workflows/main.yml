@@ -49,11 +49,6 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
-      - name: terraform temp
-        working-directory: iac
-        run: |
-          terraform init
-          terraform state rm aws_ecs_task_definition.task
       - name: Deploy Infra
         working-directory: iac
         run: |
