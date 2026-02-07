@@ -49,13 +49,13 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
-      - name: Destroy
-        working-directory: iac
-        run: |
-          npm install
-          npm install -g cdktf-cli@0.21.0
-          npx cdktf-cli get
-          cdktf destroy --auto-approve
+#      - name: Destroy
+#        working-directory: iac
+#        run: |
+#          npm install
+#          npm install -g cdktf-cli@0.21.0
+#          npx cdktf-cli get
+#          cdktf destroy --auto-approve
       - name: Deploy Infra
         working-directory: iac
         run: |
