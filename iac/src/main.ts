@@ -17,10 +17,11 @@ class Stack extends TerraformStack {
     new AwsProvider(this, "aws", {
       region: cfg.region
     });
+    const accountId = cdk.Aws.ACCOUNT_ID;
 
     const network = new NetworkStack(this, cfg);
     const iam = new IamStack(this, cfg);
-    new EcsStack(this, cfg, network, iam, this.account);
+    new EcsStack(this, cfg, network, iam, accountId);
   }
 }
 
