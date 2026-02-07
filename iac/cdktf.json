@@ -8,7 +8,7 @@
   },
   "terraformProviders": [
     "hashicorp/aws@~> 5.0",
-    "hashicorp/time@~> 0.11"
+    "hashicorp/time@~> 0.13"
   ],
   "terraformModules": []
 }
