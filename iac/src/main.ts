@@ -23,4 +23,11 @@ class Stack extends TerraformStack {
 }
 
 new Stack();
+new S3Backend(stack, {
+  bucket: "`${cfg.project}-${cfg.env}`",
+  key: "cdktf/`${cfg.project}-${cfg.env}`.tfstate",
+  region: "`${cfg.region}`",
+  dynamodbTable: "`${cfg.project}-${cfg.env}`-terraform-locks",
+  encrypt: true,
+});
 app.synth();
