@@ -4,7 +4,7 @@ import { EcrRepository } from "@cdktf/provider-aws/lib/ecr-repository";
 import { EcsCluster } from "@cdktf/provider-aws/lib/ecs-cluster";
 import { EcsService } from "@cdktf/provider-aws/lib/ecs-service";
 import { EcsTaskDefinition } from "@cdktf/provider-aws/lib/ecs-task-definition";
-import { Sleep } from "@cdktf/provider-time/lib/sleep";
+import { Sleep } from "./.gen/providers/time/sleep";
 
 export class EcsStack {
   constructor(

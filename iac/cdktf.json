@@ -10,5 +10,6 @@
     "hashicorp/aws@~> 5.0",
     "hashicorp/time@~> 0.13"
   ],
-  "terraformModules": []
+  "terraformModules": [],
+  "codeMakerOutput": ".gen"
 }

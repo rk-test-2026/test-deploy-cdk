@@ -11,8 +11,8 @@ const app = new App();
 const cfg = loadConfig();
 
 class Stack extends TerraformStack {
-  constructor(scope: Construct, id: string) {
-    super(app, id);
+  constructor() {
+    super(app, `${cfg.project}-${cfg.env}`);
 
     new AwsProvider(this, "aws", {
       region: cfg.region
