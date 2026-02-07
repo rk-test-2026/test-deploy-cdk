@@ -17,6 +17,7 @@ export class EcsStack {
 //       name: `${cfg.project}-${cfg.env}`
 //     });
 
+
     const cluster = new EcsCluster(scope, "cluster", {
       name: `${cfg.env}-cluster`
     });

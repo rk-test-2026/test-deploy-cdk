@@ -5,23 +5,23 @@ import { NetworkStack } from "./network";
 import { IamStack } from "./iam";
 import { EcsStack } from "./ecs";
 import { S3Backend} from "cdktf/lib/backends"
-import * as cdk from 'aws-cdk-lib';
+import { DataAwsCallerIdentity } from "@cdktf/provider-aws/lib/data-aws-caller-identity"
 
 const app = new App();
 const cfg = loadConfig();
 
 class Stack extends TerraformStack {
-  constructor(props?: cdk.StackProps) {
+  constructor() {
     super(app, `${cfg.project}-${cfg.env}`);
 
     new AwsProvider(this, "aws", {
       region: cfg.region
     });
-    const accountId = cdk.Aws.ACCOUNT_ID;
+    const current = new DataAwsCallerIdentity(this, "current_user");
 
     const network = new NetworkStack(this, cfg);
     const iam = new IamStack(this, cfg);
-    new EcsStack(this, cfg, network, iam, accountId);
+    new EcsStack(this, cfg, network, iam, current.accountId);
   }
 }
 
