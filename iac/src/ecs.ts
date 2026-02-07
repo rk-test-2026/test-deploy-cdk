@@ -52,6 +52,7 @@ export class EcsStack {
         securityGroups: [network.sg.id],
         assignPublicIp: true
       }
+        dependsOn: [taskDefinition]
     });
   }
 }
