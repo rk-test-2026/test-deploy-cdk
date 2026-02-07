@@ -1,8 +1,15 @@
 {
   "language": "typescript",
   "app": "npx ts-node src/main.ts",
-  "terraformProviders": ["hashicorp/aws@~> 5.0"],
   "context": {
-    "project": "tv-assessment-app"
-  }
+    "project": "tv-assessment-app",
+    "excludeStackIdFromLogicalIds": "true",
+    "allowSepCharsInLogicalIds": "true"
+  },
+  "terraformProviders": [
+    "hashicorp/aws@~> 5.0",
+    "hashicorp/time@~> 0.11"
+  ],
+  "terraformModules": [],
+  "codeMakerOutput": ".gen",
 }

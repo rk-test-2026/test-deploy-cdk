@@ -42,6 +42,11 @@ export class EcsStack {
       ])
     });
 
+const wait = new Sleep(this, "wait_for_task", {
+  createDuration: "30s",
+  dependsOn: [taskDefinition]
+});
+
     const ecsService = new EcsService(scope, "service", {
       name: `${cfg.env}-service`,
       cluster: cluster.id,
@@ -53,7 +58,7 @@ export class EcsStack {
         securityGroups: [network.sg.id],
         assignPublicIp: true
       },
-      dependsOn: [taskDefinition]
+      dependsOn: [wait]
     });
   }
 }
