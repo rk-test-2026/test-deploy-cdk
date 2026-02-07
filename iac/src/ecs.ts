@@ -42,7 +42,7 @@ export class EcsStack {
       ])
     });
 
-    new EcsService(scope, "service", {
+    const ecsService = new EcsService(scope, "service", {
       name: `${cfg.env}-service`,
       cluster: cluster.id,
       taskDefinition: taskDefinition.arn,
