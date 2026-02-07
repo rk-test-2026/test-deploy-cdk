@@ -55,10 +55,7 @@ jobs:
           npm install
           npm install -g cdktf-cli@0.21.0
           npx cdktf-cli get
-          cdktf synth
-          cd cdktf.out/stacks/tv-assessment-app-dev
-          terraform init
-          terraform state rm aws_ecs_task_definition.task || true
+          cdktf destroy
       - name: Deploy Infra
         working-directory: iac
         run: |
