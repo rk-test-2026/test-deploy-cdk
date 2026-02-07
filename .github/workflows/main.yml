@@ -49,6 +49,14 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
+      - name: Force Clear Broken State
+        run: |
+          npm install
+          npm install -g cdktf-cli@0.21.0
+          cdktf-cli synth
+          cd cdktf.out/stacks/tv-assessment-app-dev
+          terraform init
+          terraform state rm aws_ecs_task_definition.task || true
       - name: Deploy Infra
         working-directory: iac
         run: |
@@ -57,6 +65,8 @@ jobs:
           npx cdktf-cli get
           cdktf deploy --auto-approve
 
+          
+          
 
   push:
     runs-on: ubuntu-latest
