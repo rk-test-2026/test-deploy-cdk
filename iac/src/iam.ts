@@ -2,7 +2,7 @@
 import { Construct } from "constructs";
 import { IamRole } from "../.gen/providers/aws/iam-role";
 import { IamRolePolicyAttachment } from "../.gen/providers/aws/iam-role-policy-attachment";
-import { IamServiceLinkedRole } from "./.gen/providers/aws/iam-service-linked-role";
+import { IamServiceLinkedRole } from "../.gen/providers/aws/iam-service-linked-role";
 
 export class IamStack {
   executionRole: IamRole;
