@@ -12,7 +12,7 @@ const cfg = loadConfig();
 
 class Stack extends TerraformStack {
   constructor(props?: cdk.StackProps) {
-    super(app, `${cfg.project}-${cfg.env}`, props);
+    super(app, `${cfg.project}-${cfg.env}`);
 
     new AwsProvider(this, "aws", {
       region: cfg.region
