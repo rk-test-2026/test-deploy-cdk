@@ -46,7 +46,7 @@ export class EcsStack {
 
     new TimeProvider(scope, "time_provider");
 
-    const wait = new Sleep(scope, "wait_for_task", {
+    const waitStep = new Sleep(scope, "wait_for_task", {
         createDuration: "30s",
         dependsOn: [taskDefinition]
     });
@@ -55,14 +55,14 @@ export class EcsStack {
       name: `${cfg.env}-service`,
       cluster: cluster.id,
       taskDefinition: taskDefinition.arn,
+      dependsOn: [waitStep],
       desiredCount: cfg.desiredCount,
       launchType: "FARGATE",
       networkConfiguration: {
         subnets: network.subnets.map((s: any) => s.id),
         securityGroups: [network.sg.id],
         assignPublicIp: true
-      },
-      dependsOn: [wait]
+      }
     });
   }
 }
