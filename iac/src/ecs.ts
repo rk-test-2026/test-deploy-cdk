@@ -49,15 +49,12 @@ export class EcsStack {
     });
 
 
-
-  }
-
-const waitStep = new Sleep(scope, "wait_for_task", {
+    const waitStep = new Sleep(scope, "wait_for_task", {
         createDuration: "30s",
         dependsOn: [taskDef]
     });
 
-new EcsService(scope, "service", {
+    new EcsService(scope, "service", {
       name: `${cfg.project}-${cfg.env}-service`,
       cluster: cluster.id,
       taskDefinition: taskDef.arn,
@@ -65,4 +62,5 @@ new EcsService(scope, "service", {
       desiredCount: cfg.desiredCount,
       launchType: "EC2",
     });
+  }
 }
