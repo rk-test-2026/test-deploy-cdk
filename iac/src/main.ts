@@ -17,8 +17,8 @@ class Stack extends TerraformStack {
       region: cfg.region
     });
 
-    const network = new NetworkStack(this, cfg);
-    const iam = new IamStack(this, cfg);
+//     const network = new NetworkStack(this, cfg);
+//     const iam = new IamStack(this, cfg);
     new EcsStack(this, cfg, network, iam);
   }
 }

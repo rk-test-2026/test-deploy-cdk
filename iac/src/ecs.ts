@@ -12,9 +12,9 @@ export class EcsStack {
     network: any,
     iam: any
   ) {
-    const repo = new EcrRepository(scope, "repo", {
-      name: `${cfg.project}-${cfg.env}`
-    });
+//     const repo = new EcrRepository(scope, "repo", {
+//       name: `${cfg.project}-${cfg.env}`
+//     });
 
     const cluster = new EcsCluster(scope, "cluster", {
       name: `${cfg.env}-cluster`
@@ -31,7 +31,7 @@ export class EcsStack {
       containerDefinitions: JSON.stringify([
         {
           name: "app",
-          image: `${repo.repositoryUrl}:latest`,
+          image: `${Stack.of(this).account}.dkr.ecr.${Stack.of(this).region}.amazonaws.com/${cfg.project}-${cfg.env}:latest`,
           portMappings: [
             { containerPort: cfg.containerPort }
           ]
