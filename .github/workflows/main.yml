@@ -23,7 +23,6 @@ jobs:
         run: |
           cd ./app
           docker build -t $REGISTRY/tv-assessment-app-${{ env.ENV }}:$IMAGE_TAG .
-          docker push $REGISTRY/tv-assessment-app-${{ env.ENV }}:$IMAGE_TAG
 
   deploy:
     runs-on: ubuntu-latest
