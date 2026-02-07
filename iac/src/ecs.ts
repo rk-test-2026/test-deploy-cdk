@@ -4,6 +4,7 @@ import { EcrRepository } from "../.gen/providers/aws/ecr-repository";
 import { EcsCluster } from "../.gen/providers/aws/ecs-cluster";
 import { EcsService } from "../.gen/providers/aws/ecs-service";
 import { EcsTaskDefinition } from "../.gen/providers/aws/ecs-task-definition";
+import { TimeProvider } from "../.gen/providers/time/provider";
 import { Sleep } from "../.gen/providers/time/sleep";
 
 export class EcsStack {
@@ -42,6 +43,8 @@ export class EcsStack {
         }
       ])
     });
+
+    new TimeProvider(this, "time_provider");
 
     const wait = new Sleep(scope, "wait_for_task", {
         createDuration: "30s",
