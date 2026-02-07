@@ -19,7 +19,6 @@ export class EcsStack {
       name: `${cfg.project}-${cfg.env}`
     });
 
-
     const cluster = new EcsCluster(scope, "cluster", {
       name: `${cfg.env}-cluster`
     });
@@ -28,9 +27,9 @@ export class EcsStack {
       family: `${cfg.env}-task`,
       cpu: `${cfg.cpu}`,
       memory: `${cfg.memory}`,
-      networkMode: "awsvpc",
+      networkMode: "bridge",
       trackLatest: true,
-      requiresCompatibilities: ["FARGATE"],
+      requiresCompatibilities: ["EC2"],
       executionRoleArn: iam.executionRole.arn,
       taskRoleArn: iam.taskRole.arn,
       containerDefinitions: JSON.stringify([
@@ -38,7 +37,10 @@ export class EcsStack {
           name: "app",
           image: `${accountId}.dkr.ecr.${cfg.region}.amazonaws.com/${cfg.project}-${cfg.env}:latest`,
           portMappings: [
-            { containerPort: cfg.containerPort }
+            {
+              containerPort: cfg.containerPort,
+              hostPort: cfg.hostPort || 0
+            }
           ]
         }
       ])
@@ -51,18 +53,13 @@ export class EcsStack {
         dependsOn: [taskDefinition]
     });
 
-    const ecsService = new EcsService(scope, "service", {
+    new EcsService(scope, "service", {
       name: `${cfg.env}-service`,
       cluster: cluster.id,
       taskDefinition: taskDefinition.arn,
       dependsOn: [waitStep],
       desiredCount: cfg.desiredCount,
-      launchType: "FARGATE",
-      networkConfiguration: {
-        subnets: network.subnets.map((s: any) => s.id),
-        securityGroups: [network.sg.id],
-        assignPublicIp: true
-      }
+      launchType: "EC2",
     });
   }
 }
