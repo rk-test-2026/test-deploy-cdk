@@ -3,6 +3,12 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      force_clean_state:
+        description: 'Remove task definition from state before deploy?'
+        required: false
+        default: 'false'
 
 env:
   ENV: dev
@@ -48,6 +54,9 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
+      - name: Clean State if Requested
+        if: github.event.inputs.force_clean_state == 'true'
+        run: npx cdktf-cli state rm --stack tv-assessment-app-dev aws_ecs_task_definition.task
       - name: Deploy Infra
         working-directory: iac
         run: |
