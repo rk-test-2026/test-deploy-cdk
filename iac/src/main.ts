@@ -19,7 +19,7 @@ class Stack extends TerraformStack {
 
     const network = new NetworkStack(this, cfg);
     const iam = new IamStack(this, cfg);
-    new EcsStack(this, cfg, network, iam);
+    new EcsStack(this, cfg, network, iam, this.account);
   }
 }
 
