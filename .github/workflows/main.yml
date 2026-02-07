@@ -54,6 +54,8 @@ jobs:
         run: |
           npm install
           npm install -g cdktf-cli
+          cdktf synth
+          terraform state rm aws_ecs_task_definition.task
           cdktf deploy --auto-approve
 
 
