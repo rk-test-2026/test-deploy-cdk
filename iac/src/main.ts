@@ -5,13 +5,14 @@ import { NetworkStack } from "./network";
 import { IamStack } from "./iam";
 import { EcsStack } from "./ecs";
 import { S3Backend} from "cdktf/lib/backends"
+import * as cdk from 'aws-cdk-lib';
 
 const app = new App();
 const cfg = loadConfig();
 
 class Stack extends TerraformStack {
-  constructor() {
-    super(app, `${cfg.project}-${cfg.env}`);
+  constructor(props?: cdk.StackProps) {
+    super(app, `${cfg.project}-${cfg.env}`, props);
 
     new AwsProvider(this, "aws", {
       region: cfg.region
