@@ -4,6 +4,7 @@ import { loadConfig } from "./config";
 import { NetworkStack } from "./network";
 import { IamStack } from "./iam";
 import { EcsStack } from "./ecs";
+import { S3Backend} from "./cdktf/lib/backends"
 
 const app = new App();
 const cfg = loadConfig();
