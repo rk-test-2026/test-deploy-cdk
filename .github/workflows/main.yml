@@ -49,7 +49,7 @@ jobs:
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.6.6
-      - name: Force Clear Broken State
+      - name: Destroy
         working-directory: iac
         run: |
           npm install
