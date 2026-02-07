@@ -28,7 +28,7 @@ export class IamStack {
     });
 
 
-    new IamServiceLinkedRole(this, "ecs_service_linked_role", {
+    new IamServiceLinkedRole(scope, "ecs_service_linked_role", {
       awsServiceName: "ecs.amazonaws.com",
     });
 
