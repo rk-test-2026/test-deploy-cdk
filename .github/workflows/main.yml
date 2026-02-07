@@ -1,6 +1,8 @@
 name: CI Build
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
 
 env:
   ENV: dev
@@ -44,7 +46,7 @@ jobs:
         run: |
           npm install
           npm install -g cdktf-cli
-          cdktf deploy --auto-approve
+          cdktf destroy --auto-approve
 
 
 
