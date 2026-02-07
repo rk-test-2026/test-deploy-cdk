@@ -49,8 +49,8 @@ jobs:
           IMAGE_TAG: ${{ github.sha }}
         run: |
           cd ./app
-          docker build -t $REGISTRY/tv-assessment-app:$IMAGE_TAG .
-          docker push $REGISTRY/tv-assessment-app:$IMAGE_TAG
+          docker build -t $REGISTRY/tv-assessment-app-${{ env.ENV }}:$IMAGE_TAG .
+          docker push $REGISTRY/tv-assessment-app-${{ env.ENV }}:$IMAGE_TAG
       - name: Deploy Infra
         working-directory: iac
         run: |
