@@ -50,6 +50,7 @@ jobs:
         with:
           terraform_version: 1.6.6
       - name: Force Clear Broken State
+        working-directory: iac
         run: |
           npm install
           npm install -g cdktf-cli@0.21.0
