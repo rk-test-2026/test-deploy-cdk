@@ -12,7 +12,7 @@ const cfg = loadConfig();
 
 class Stack extends TerraformStack {
   constructor(scope: Construct, id: string) {
-    super(scope, id);
+    super(app, id);
 
     new AwsProvider(this, "aws", {
       region: cfg.region
@@ -33,4 +33,4 @@ new S3Backend(stack, {
   dynamodbTable: `${cfg.project}-${cfg.env}-terraform-locks`,
   encrypt: true,
 });
-stack.synth();
+app.synth();
