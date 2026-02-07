@@ -22,7 +22,7 @@ export class EcsStack {
       name: `${cfg.env}-cluster`
     });
 
-    const task = new EcsTaskDefinition(scope, "task", {
+    const taskDefinition = new EcsTaskDefinition(scope, "task", {
       family: `${cfg.env}-task`,
       cpu: `${cfg.cpu}`,
       memory: `${cfg.memory}`,
@@ -44,7 +44,7 @@ export class EcsStack {
     new EcsService(scope, "service", {
       name: `${cfg.env}-service`,
       cluster: cluster.id,
-      taskDefinition: task.arn,
+      taskDefinition: taskDefinition.arn,
       desiredCount: cfg.desiredCount,
       launchType: "FARGATE",
       networkConfiguration: {
