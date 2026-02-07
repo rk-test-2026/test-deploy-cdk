@@ -23,7 +23,7 @@ class Stack extends TerraformStack {
   }
 }
 
-Stack stack = new Stack();
+const stack = new Stack();
 new S3Backend(stack, {
   bucket: "`${cfg.project}-${cfg.env}`",
   key: "cdktf/`${cfg.project}-${cfg.env}`.tfstate",
