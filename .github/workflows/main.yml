@@ -3,12 +3,7 @@ on:
   push:
     branches:
       - main
-  workflow_dispatch:
-    inputs:
-      force_clean_state:
-        description: 'Remove task definition from state before deploy?'
-        required: false
-        default: 'false'
+
 
 env:
   ENV: dev
