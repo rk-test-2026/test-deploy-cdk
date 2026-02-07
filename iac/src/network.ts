@@ -1,8 +1,8 @@
 import { Construct } from "constructs";
 
-import { Vpc } from "@cdktf/provider-aws/lib/vpc";
-import { Subnet } from "@cdktf/provider-aws/lib/subnet";
-import { SecurityGroup } from "@cdktf/provider-aws/lib/security-group";
+import { Vpc } from "./.gen/providers/aws/vpc";
+import { Subnet } from "./.gen/providers/aws/subnet";
+import { SecurityGroup } from "./.gen/providers/aws/security-group";
 
 export class NetworkStack {
   vpc: Vpc;
