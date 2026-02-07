@@ -44,7 +44,7 @@ export class EcsStack {
 
 
     const ecsService = new EcsService(scope, "service", {
-      name: `${cfg.project}-${cfg.env}-service`,
+      name: `${cfg.project}-${cfg.env}-fargate-service`,
       cluster: cluster.id,
       taskDefinition: taskDef.arn,
       dependsOn: [taskDef],
