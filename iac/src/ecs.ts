@@ -13,15 +13,10 @@ export class EcsStack {
     iam: any,
     accountId: any
   ) {
-    const repo = new EcrRepository(scope, "repo", {
-      name: `${cfg.project}-${cfg.env}`
-    });
 
     const cluster = new EcsCluster(scope, "cluster", {
       name: `${cfg.env}-cluster`
     });
-
-//     new TimeProvider(scope, "time_provider");
 
     const taskDef = new EcsTaskDefinition(scope, "task", {
       family: `${cfg.project}-${cfg.env}-task`,
