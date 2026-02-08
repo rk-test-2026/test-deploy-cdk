@@ -62,15 +62,15 @@ jobs:
           npm install
           npm install -g cdktf-cli@0.21.0
           npx cdktf-cli get
-          cdktf deploy EcrStack --auto-approve
+          cdktf deploy ecr --auto-approve
 
-      - name: Deploy Prerequisites
+      - name: Deploy Infra
         working-directory: iac
         run: |
           npm install
           npm install -g cdktf-cli@0.21.0
           npx cdktf-cli get
-          cdktf deploy Stack --auto-approve
+          cdktf deploy main --auto-approve
 
           
           
