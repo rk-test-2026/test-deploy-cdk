@@ -18,12 +18,12 @@ export class NetworkStack {
       tags: { Name: `${cfg.env}-vpc` }
     });
 
-    const igw = new InternetGateway(this, "igw", {
+    const igw = new InternetGateway(scope, "igw", {
       vpcId: this.vpc.id,
       tags: { Name: `${cfg.env}-igw` }
     });
 
-    const publicRouteTable = new RouteTable(this, "public-rt", {
+    const publicRouteTable = new RouteTable(scope, "public-rt", {
       vpcId: this.vpc.id,
       route: [
         {
