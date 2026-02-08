@@ -70,7 +70,7 @@ jobs:
           npm install
           npm install -g cdktf-cli@0.21.0
           npx cdktf-cli get
-          cdktf deploy main --auto-approve
+          cdktf deploy --auto-approve
 
           
           
