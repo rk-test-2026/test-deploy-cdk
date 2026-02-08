@@ -4,7 +4,7 @@ import { loadConfig } from "./config";
 import { NetworkStack } from "./network";
 import { IamStack } from "./iam";
 import { EcsStack } from "./ecs";
-import { EcsStack } from "./ecr";
+import { EcrStack } from "./ecr";
 import { S3Backend} from "cdktf/lib/backends"
 import { DataAwsCallerIdentity } from "../.gen/providers/aws/data-aws-caller-identity"
 

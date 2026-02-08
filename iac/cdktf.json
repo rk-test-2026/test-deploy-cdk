@@ -7,8 +7,7 @@
     "allowSepCharsInLogicalIds": "true"
   },
   "terraformProviders": [
-    "hashicorp/aws@~> 5.0",
-    "hashicorp/time@~> 0.13"
+    "hashicorp/aws@~> 5.0"
   ],
   "terraformModules": [],
   "codeMakerOutput": ".gen"

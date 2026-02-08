@@ -1,4 +1,3 @@
-// src/iam.ts
 import { Construct } from "constructs";
 import { IamRole } from "../.gen/providers/aws/iam-role";
 import { IamRolePolicyAttachment } from "../.gen/providers/aws/iam-role-policy-attachment";
