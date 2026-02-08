@@ -17,17 +17,7 @@ export class EcrStack extends TerraformStack {
         });
 
         new EcrRepository(this, "repo", {
-          name: `${cfg.project}-${cfg.env}`,
-          lifecycleRules: JSON.stringify([{
-              rulePriority: 1,
-              description: 'Keep only the 10 most recent images',
-              selection: {
-                tagStatus: "any",
-                countType: "imageCountMoreThan",
-                countNumber: 10
-              },
-              action: { type: "expire" }
-          }]),
+          name: `${cfg.project}-${cfg.env}`
         });
     }
 }
