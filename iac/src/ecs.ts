@@ -1,4 +1,3 @@
-// src/ecs.ts
 import { Construct } from "constructs";
 import { EcrRepository } from "../.gen/providers/aws/ecr-repository";
 import { EcsCluster } from "../.gen/providers/aws/ecs-cluster";

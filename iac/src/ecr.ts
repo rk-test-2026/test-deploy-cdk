@@ -8,7 +8,7 @@ import { loadConfig } from "./config";
 const app = new App();
 const cfg = loadConfig();
 
-class EcrStack extends TerraformStack {
+export class EcrStack extends TerraformStack {
     constructor(scope: Construct, id: string, cfg: any)  {
         super(scope, id); // 'id' will be "ecr"
 
