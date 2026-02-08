@@ -1,32 +1,34 @@
 import { App, TerraformStack } from "cdktf";
+import { Construct } from "constructs"; // Don't forget this import
 import { AwsProvider } from "../.gen/providers/aws/provider";
+import { EcrRepository } from "../.gen/providers/aws/ecr-repository";
+import { S3Backend } from "cdktf";
 import { loadConfig } from "./config";
 
 const app = new App();
 const cfg = loadConfig();
 
 class EcrStack extends TerraformStack {
-    constructor() {
-        super(app, `${cfg.project}-${cfg.env}`);
+    constructor(scope: Construct, id: string, cfg: any)  {
+        super(scope, id); // 'id' will be "ecr"
 
-            new AwsProvider(this, "aws", {
-              region: cfg.region
-            });
-            const repo = new EcrRepository(scope, "repo", {
-                  name: `${cfg.project}-${cfg.env}`,
-                  lifecycleRules: [{
-                          maxImageCount: 10,
-                          description: 'Keep only the 10 most recent images',
-                        }],
-                });
+        new AwsProvider(this, "aws", {
+          region: cfg.region
+        });
+
+        new EcrRepository(this, "repo", {
+          name: `${cfg.project}-${cfg.env}`,
+          lifecycleRules: JSON.stringify([{
+              rulePriority: 1,
+              description: 'Keep only the 10 most recent images',
+              selection: {
+                tagStatus: "any",
+                countType: "imageCountMoreThan",
+                countNumber: 10
+              },
+              action: { type: "expire" }
+          }]),
+        });
     }
 }
-const ecrStack = new EcrStack();
-new S3Backend(ecrStack, {
-  bucket: `${cfg.project}-${cfg.env}`,
-  key: `cdktf/ecr-${cfg.project}-${cfg.env}.tfstate`,
-  region: `${cfg.region}`,
-  dynamodbTable: `${cfg.project}-${cfg.env}-ecr-terraform-locks`,
-  encrypt: true,
-});
-app.synth();
+

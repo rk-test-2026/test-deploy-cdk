@@ -4,6 +4,7 @@ import { loadConfig } from "./config";
 import { NetworkStack } from "./network";
 import { IamStack } from "./iam";
 import { EcsStack } from "./ecs";
+import { EcsStack } from "./ecr";
 import { S3Backend} from "cdktf/lib/backends"
 import { DataAwsCallerIdentity } from "../.gen/providers/aws/data-aws-caller-identity"
 
@@ -22,6 +23,7 @@ class Stack extends TerraformStack {
     const network = new NetworkStack(this, cfg);
     const iam = new IamStack(this, cfg);
     new EcsStack(this, cfg, network, iam, current.accountId);
+    new EcrStack(this, "ecr", cfg)
   }
 }
 
