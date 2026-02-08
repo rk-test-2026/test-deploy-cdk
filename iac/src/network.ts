@@ -14,7 +14,7 @@ export class NetworkStack {
 
   constructor(scope: Construct, cfg: any) {
     this.vpc = new Vpc(scope, "vpc", {
-      cidrBlock: "10.0.0.0/16",
+      cidrBlock: `${cfg.cidrBlock}`,
       tags: { Name: `${cfg.env}-vpc` }
     });
 

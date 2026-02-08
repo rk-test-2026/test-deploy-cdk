@@ -65,3 +65,4 @@ jobs:
           npm install -g cdktf-cli@0.21.0
           npx cdktf-cli get
           cdktf deploy ${{ env.APP_NAME }}-${{ env.ENV }} --auto-approve
+          npx cdktf-cli deploy ecs --auto-approve

@@ -3,5 +3,6 @@
   "cpu": 256,
   "memory": 512,
   "desiredCount": 1,
-  "containerPort": 3000
+  "containerPort": 3000,
+  "cidrBlock": "10.0.0.0/16"
 }
