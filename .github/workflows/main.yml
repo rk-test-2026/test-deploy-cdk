@@ -9,6 +9,8 @@ env:
   ENV: dev
   AWS_REGION: us-east-1
   APP_NAME: tv-assessment-app
+  REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
+  IMAGE_TAG: ${{ github.sha }}
 
 jobs:
   deploy:
@@ -51,9 +53,6 @@ jobs:
           cdktf deploy ecr --auto-approve
 
       - name: Build and push Docker image
-        env:
-          REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
-          IMAGE_TAG: ${{ github.sha }}
         run: |
           cd ./app
           docker build -t $REGISTRY/${{ env.APP_NAME }}-${{ env.ENV }}:$IMAGE_TAG .
@@ -65,4 +64,3 @@ jobs:
           npm install -g cdktf-cli@0.21.0
           npx cdktf-cli get
           cdktf deploy ${{ env.APP_NAME }}-${{ env.ENV }} --auto-approve
-          npx cdktf-cli deploy ecs --auto-approve

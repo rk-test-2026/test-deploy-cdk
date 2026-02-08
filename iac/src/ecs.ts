@@ -13,6 +13,8 @@ export class EcsStack {
     accountId: any
   ) {
 
+    const image_tag = process.env.IMAGE_TAG || "latest";
+
     const cluster = new EcsCluster(scope, "cluster", {
       name: `${cfg.env}-cluster`
     });
@@ -28,7 +30,7 @@ export class EcsStack {
       containerDefinitions: JSON.stringify([
         {
           name: `${cfg.project}-${cfg.env}`,
-          image: `${accountId}.dkr.ecr.${cfg.region}.amazonaws.com/${cfg.project}-${cfg.env}:latest`,
+          image: `${accountId}.dkr.ecr.${cfg.region}.amazonaws.com/${cfg.project}-${cfg.env}:${image_tag}`,
           portMappings: [
             { containerPort: cfg.containerPort }
           ]
