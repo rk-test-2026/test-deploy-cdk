@@ -64,7 +64,7 @@ export class NetworkStack {
     });
 
     this.subnets.forEach((subnet, index) => {
-      new RouteTableAssociation(this, `rt-assoc-${index}`, {
+      new RouteTableAssociation(scope, `rt-assoc-${index}`, {
         subnetId: subnet.id,
         routeTableId: publicRouteTable.id
       });
