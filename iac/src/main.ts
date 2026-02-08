@@ -23,7 +23,7 @@ class Stack extends TerraformStack {
     const network = new NetworkStack(this, cfg);
     const iam = new IamStack(this, cfg);
     new EcsStack(this, cfg, network, iam, current.accountId);
-    new EcrStack(this, "ecr", cfg)
+    const ecrStack = new EcrStack(this, "ecr", cfg)
   }
 }
 
@@ -33,6 +33,13 @@ new S3Backend(stack, {
   key: `cdktf/${cfg.project}-${cfg.env}.tfstate`,
   region: `${cfg.region}`,
   dynamodbTable: `${cfg.project}-${cfg.env}-terraform-locks`,
+  encrypt: true,
+});
+new S3Backend(ecrStack, {
+  bucket: `${cfg.project}-${cfg.env}`,
+  key: `cdktf/ecr-${cfg.project}-${cfg.env}.tfstate`,
+  region: `${cfg.region}`,
+  dynamodbTable: `${cfg.project}-${cfg.env}-ecr-terraform-locks`,
   encrypt: true,
 });
 app.synth();
