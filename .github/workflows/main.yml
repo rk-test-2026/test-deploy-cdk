@@ -8,6 +8,7 @@ on:
 env:
   ENV: dev
   AWS_REGION: us-east-1
+  APP_NAME: tv-assessment-app
 
 jobs:
 #  build:
@@ -55,7 +56,7 @@ jobs:
           npm install
           npm install -g cdktf-cli@0.21.0
           npx cdktf-cli get
-          cdktf destroy --auto-approve
+          cdktf destroy ${{ env.APP_NAME }}-${{ env.ENV }} --auto-approve
       - name: Deploy Prerequisites
         working-directory: iac
         run: |
@@ -70,7 +71,7 @@ jobs:
           npm install
           npm install -g cdktf-cli@0.21.0
           npx cdktf-cli get
-          cdktf deploy --auto-approve
+          cdktf deploy ${{ env.APP_NAME }}-${{ env.ENV }} --auto-approve
 
           
           
