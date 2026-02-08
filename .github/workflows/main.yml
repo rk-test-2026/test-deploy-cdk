@@ -65,6 +65,14 @@ jobs:
           npx cdktf-cli get
           cdktf deploy ecr --auto-approve
 
+      - name: Build and push Docker image
+        env:
+          REGISTRY: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          cd ./app
+          docker build -t $REGISTRY/${{ env.APP_NAME }}-${{ env.ENV }}:$IMAGE_TAG .
+          docker push $REGISTRY/${{ env.APP_NAME }}-${{ env.ENV }}:$IMAGE_TAG
       - name: Deploy Infra
         working-directory: iac
         run: |
