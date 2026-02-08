@@ -60,6 +60,8 @@ jobs:
           docker push $REGISTRY/${{ env.APP_NAME }}-${{ env.ENV }}:$IMAGE_TAG
       - name: Deploy Infra
         working-directory: iac
+        env:
+          IMAGE_TAG: ${{ github.sha }}
         run: |
           npm install
           npm install -g cdktf-cli@0.21.0
